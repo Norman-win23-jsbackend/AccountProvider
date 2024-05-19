@@ -13,6 +13,7 @@ namespace AccountProvider.Functions;
 public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager)
 {
 
+
     private readonly ILogger<Verify> _logger = logger;
     private readonly UserManager<UserAccount> _userManager = userManager;
 
@@ -78,3 +79,11 @@ public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager
     }
 }
 
+//https://accountprovider-siliconas-nor.azurewebsites.net/api/SignUp?code=-syJy4HWS3GUZTEvOBNtmHcSXIRrw8JEEcw2kjcFcsLWAzFuKIlH1g%3D%3D
+
+
+
+//https://accountprovider-siliconas-nor.azurewebsites.net/api/SignIn?code=QllATzSQuwpTeG0jPX5-TOKsCAPde3jcnOntmWS6JHY2AzFuZvse2Q%3D%3D
+
+
+//https://accountprovider-siliconas-nor.azurewebsites.net/api/Verify?code=3hwpjDYEz-6_wSCaF-d7oudlGkNXl2j-lJqLwY5UJq0uAzFue6aP2Q%3D%3D
