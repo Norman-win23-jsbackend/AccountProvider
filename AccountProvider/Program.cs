@@ -1,5 +1,6 @@
 using Data.Contexts;
 using Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,8 +26,13 @@ var host = new HostBuilder()
         }).AddEntityFrameworkStores<DataContext>();
 
 
+
+
+
         services.AddAuthentication();
         services.AddAuthorization();
+
+
 
 
 

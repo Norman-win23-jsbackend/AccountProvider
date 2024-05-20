@@ -12,15 +12,11 @@ namespace AccountProvider.Functions;
 
 public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager)
 {
-
-
     private readonly ILogger<Verify> _logger = logger;
     private readonly UserManager<UserAccount> _userManager = userManager;
 
-
-
     [Function("Verify")]
-    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function,"post")] HttpRequest req)
+    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
     {
         string body = null!;
         try
@@ -33,7 +29,7 @@ public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager
             _logger.LogError($"StreamReader :: {ex.Message}");
         }
 
-        if(body != null) 
+        if (body != null)
         {
             VerificationRequest vr = null!;
             try
@@ -51,7 +47,7 @@ public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager
                 {
                     using var http = new HttpClient();
                     StringContent content = new StringContent(JsonConvert.SerializeObject(vr), Encoding.UTF8, "application/json");
-                   // var response = await http.PostAsync("https://verificationprovider.siliconas.azurewebsite.net/api/verify", content);
+                    // var response = await http.PostAsync("https://verificationprovider.siliconas.azurewebsite.net/api/verify", content);
 
                     if (true)
                     {

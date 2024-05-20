@@ -1,4 +1,4 @@
-using AccountProvider.Models;
+﻿using AccountProvider.Models;
 using Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -31,12 +31,12 @@ public class SignIn(ILogger<SignIn> logger, SignInManager<UserAccount> signInMan
             _logger.LogError($"StreamReader :: {ex.Message}");
         }
 
-        if(body != null)
+        if (body != null)
         {
             UserLoginRequest ulr = null!;
             try
             {
-                ulr = JsonConvert.DeserializeObject<UserLoginRequest>(body);
+                ulr = JsonConvert.DeserializeObject<UserLoginRequest>(body)!;
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ public class SignIn(ILogger<SignIn> logger, SignInManager<UserAccount> signInMan
                 return new ConflictResult();
             }
 
-            
+
         }
         return new BadRequestResult();
     }
