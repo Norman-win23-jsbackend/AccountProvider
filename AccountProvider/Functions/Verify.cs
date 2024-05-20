@@ -75,6 +75,9 @@ public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager
     }
 }
 
+
+
+
 //https://accountprovider-siliconas-nor.azurewebsites.net/api/SignUp?code=-syJy4HWS3GUZTEvOBNtmHcSXIRrw8JEEcw2kjcFcsLWAzFuKIlH1g%3D%3D
 
 
@@ -83,3 +86,17 @@ public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager
 
 
 //https://accountprovider-siliconas-nor.azurewebsites.net/api/Verify?code=3hwpjDYEz-6_wSCaF-d7oudlGkNXl2j-lJqLwY5UJq0uAzFue6aP2Q%3D%3D
+
+//{
+//    "Email": "john.doe@example.com",
+//    "VerificationCode": "asdfasfdas"
+//}
+
+
+
+//{
+//    "FirstName": "John",
+//    "LastName": "Doe",
+//    "Email": "john.doe@example.com",
+//    "Password": "StrongPassword123!"
+//}

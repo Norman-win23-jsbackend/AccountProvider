@@ -9,10 +9,11 @@ using Newtonsoft.Json;
 
 namespace AccountProvider.Functions;
 
-public class SignIn(ILogger<SignIn> logger, SignInManager<UserAccount> signInManager)
+public class SignIn(ILogger<SignIn> logger, SignInManager<UserAccount> signInManager, UserManager<UserAccount> userManger)
 {
 
     private readonly ILogger<SignIn> _logger = logger;
+    private readonly UserManager<UserAccount> _userManger = userManger;
     private readonly SignInManager<UserAccount> _signInManager = signInManager;
 
 
@@ -47,19 +48,21 @@ public class SignIn(ILogger<SignIn> logger, SignInManager<UserAccount> signInMan
             {
                 try
                 {
-                    var result = await _signInManager.PasswordSignInAsync(ulr.Email, ulr.Password, ulr.IsPersistent, false);
+                    var userAccount = await _userManger.FindByEmailAsync(ulr.Email);
+                    var result = await _signInManager.CheckPasswordSignInAsync(userAccount!, ulr.Password, false);
+
                     if (result.Succeeded)
                     {
-                        // Get token from TokenProvider
                         return new OkObjectResult("accesstoken");
                     }
-                    return new UnauthorizedResult();
+
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError($"_signInManager.PasswordSignInAsync :: {ex.Message}");
                 }
 
+                return new UnauthorizedResult();
 
             }
             else
