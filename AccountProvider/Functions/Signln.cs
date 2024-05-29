@@ -25,7 +25,6 @@ public class SignIn(ILogger<SignIn> logger, SignInManager<UserAccount> signInMan
         try
         {
             body = await new StreamReader(req.Body).ReadToEndAsync();
-
         }
         catch (Exception ex)
         {
@@ -43,16 +42,16 @@ public class SignIn(ILogger<SignIn> logger, SignInManager<UserAccount> signInMan
             {
                 _logger.LogError($"JsonConvert.DeserializeObject<UserLoginRequest> :: {ex.Message}");
             }
-
             if (ulr != null && !string.IsNullOrEmpty(ulr.Email) && !string.IsNullOrEmpty(ulr.Password))
             {
                 try
                 {
-                    var userAccount = await _userManger.FindByEmailAsync(ulr.Email);
-                    var result = await _signInManager.CheckPasswordSignInAsync(userAccount!, ulr.Password, false);
-
+                    //  var userAccount = await _userManger.FindByEmailAsync(ulr.Email);
+                    //var result = await _signInManager.CheckPasswordSignInAsync(userAccount!, ulr.Password, false);'
+                   var result = await _signInManager.PasswordSignInAsync(ulr.Email, ulr.Password, ulr.IsPersistent, false);
                     if (result.Succeeded)
                     {
+                        // get accesstoken from TokenProvider
                         return new OkObjectResult("accesstoken");
                     }
 
@@ -61,18 +60,13 @@ public class SignIn(ILogger<SignIn> logger, SignInManager<UserAccount> signInMan
                 {
                     _logger.LogError($"_signInManager.PasswordSignInAsync :: {ex.Message}");
                 }
-
                 return new UnauthorizedResult();
-
             }
             else
             {
                 return new ConflictResult();
             }
-
-
         }
         return new BadRequestResult();
     }
-
 }

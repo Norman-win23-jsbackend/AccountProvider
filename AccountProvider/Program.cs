@@ -13,11 +13,9 @@ var host = new HostBuilder()
     {
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
-
-
         services.AddDbContext<DataContext>(x => x.UseSqlServer(context.Configuration.GetConnectionString("AccountDatabase")));
 
-        services.AddDefaultIdentity<UserAccount>(options =>
+        services.AddIdentity<UserAccount, IdentityRole>(options =>
         {
             options.SignIn.RequireConfirmedAccount = true;
             options.User.RequireUniqueEmail = true;
@@ -25,16 +23,8 @@ var host = new HostBuilder()
 
         }).AddEntityFrameworkStores<DataContext>();
 
-
-
-
-
         services.AddAuthentication();
         services.AddAuthorization();
-
-
-
-
 
     })
     .Build();

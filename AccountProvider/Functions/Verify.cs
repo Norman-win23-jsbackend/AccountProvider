@@ -15,6 +15,7 @@ public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager
     private readonly ILogger<Verify> _logger = logger;
     private readonly UserManager<UserAccount> _userManager = userManager;
 
+
     [Function("Verify")]
     public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
     {
@@ -22,7 +23,6 @@ public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager
         try
         {
             body = await new StreamReader(req.Body).ReadToEndAsync();
-
         }
         catch (Exception ex)
         {
@@ -42,14 +42,15 @@ public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager
             }
             if (vr != null && !string.IsNullOrEmpty(vr.Email) && !string.IsNullOrEmpty(vr.VerificationCode))
             {
-                // om du vill kora det som en HTTP REQUEST - kraver att vi vantar pa svar tillbakfl
+                // om du vill kora det som en HTTP REQUEST - kraver att vi vantar pa svar tillbaka
                 try
                 {
                     using var http = new HttpClient();
                     StringContent content = new StringContent(JsonConvert.SerializeObject(vr), Encoding.UTF8, "application/json");
-                    // var response = await http.PostAsync("https://verificationprovider.siliconas.azurewebsite.net/api/verify", content);
+                    var response = await http.PostAsync("https://verificationprovider-silicon-nor.azurewebsites.net/api/validate?code=DviQz6sTmIlqRvNy7TENwsiOtWFJockprafPK73OmPWtAzFuvUamIQ%3D%3D", content);
+                
 
-                    if (true)
+                    if (true || response.IsSuccessStatusCode)
                     {
                         var userAccount = await _userManager.FindByEmailAsync(vr.Email);
                         if (userAccount != null)
@@ -74,29 +75,3 @@ public class Verify(ILogger<Verify> logger, UserManager<UserAccount> userManager
         return new UnauthorizedResult();
     }
 }
-
-
-
-
-//https://accountprovider-siliconas-nor.azurewebsites.net/api/SignUp?code=-syJy4HWS3GUZTEvOBNtmHcSXIRrw8JEEcw2kjcFcsLWAzFuKIlH1g%3D%3D
-
-
-
-//https://accountprovider-siliconas-nor.azurewebsites.net/api/SignIn?code=QllATzSQuwpTeG0jPX5-TOKsCAPde3jcnOntmWS6JHY2AzFuZvse2Q%3D%3D
-
-
-//https://accountprovider-siliconas-nor.azurewebsites.net/api/Verify?code=3hwpjDYEz-6_wSCaF-d7oudlGkNXl2j-lJqLwY5UJq0uAzFue6aP2Q%3D%3D
-
-//{
-//    "Email": "john.doe@example.com",
-//    "VerificationCode": "asdfasfdas"
-//}
-
-
-
-//{
-//    "FirstName": "John",
-//    "LastName": "Doe",
-//    "Email": "john.doe@example.com",
-//    "Password": "StrongPassword123!"
-//}
