@@ -46,9 +46,9 @@ public class SignIn(ILogger<SignIn> logger, SignInManager<UserAccount> signInMan
             {
                 try
                 {
-                    //  var userAccount = await _userManger.FindByEmailAsync(ulr.Email);
-                    //var result = await _signInManager.CheckPasswordSignInAsync(userAccount!, ulr.Password, false);'
-                   var result = await _signInManager.PasswordSignInAsync(ulr.Email, ulr.Password, ulr.IsPersistent, false);
+                     var userAccount = await _userManger.FindByEmailAsync(ulr.Email);
+                    var result = await _signInManager.CheckPasswordSignInAsync(userAccount!, ulr.Password, false);
+                  // var result = await _signInManager.PasswordSignInAsync(ulr.Email, ulr.Password, ulr.IsPersistent, false);
                     if (result.Succeeded)
                     {
                         // get accesstoken from TokenProvider
